@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Athena Board – Universal App UI Kit</title>
+  <link rel="icon" type="image/png"
+        href="https://devfortress.com/wp-content/uploads/2025/10/Logo-square-1000px-transparent-background.png" />
+
+  <!-- Fonts / Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&family=Rubik:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+
+  <style>
+    :root{
+      /* Universal neutral palette */
+      --bg-deep:#020617;
+      --bg-soft:#0b1120;
+      --surface:#f5f5f7;
+      --surface-alt:#e5e7eb;
+      --border:#d4d4d8;
+      --ink:#020617;
+      --muted:#6b7280;
+      --accent:#3A68E8;
+      --accent-soft:#e0e7ff;
+      --accent-dark:#1D4ED8;
+      --card-radius:22px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:'Rubik','Karla','Roboto',Arial,sans-serif;
+      background:radial-gradient(circle at top,#111827,#020617);
+      color:#f9fafb;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    a{color:inherit;text-decoration:none}
+
+    .container{max-width:1200px;margin:0 auto;padding:0 20px 40px;}
+
+    /* ===== HEADER ===== */
+    header{
+      padding:26px 0 20px;
+      background:rgba(2,6,23,0.9);
+      border-bottom:1px solid rgba(148,163,184,0.25);
+      position:sticky;
+      top:0;
+      z-index:10;
+      backdrop-filter:blur(16px);
+    }
+
+    .brand-wrap{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .brand-wrap img{
+      width:60px;
+      height:60px;
+      border-radius:20px;
+      background:#020617;
+      object-fit:contain;
+      padding:4px;
+    }
+
+    .brand-text h1{
+      margin:0;
+      font:800 1.9rem/1.15 Rubik,Arial,sans-serif;
+      color:#e5e7eb;
+    }
+
+    .brand-text p{
+      margin-top:4px;
+      font:400 0.98rem/1.5 Karla,Arial,sans-serif;
+      color:#9ca3af;
+    }
+
+    .brand-text strong{color:#f9fafb;}
+
+    .cta-row{
+      margin-top:18px;
+      display:flex;
+      justify-content:center;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border-radius:999px;
+      padding:11px 22px;
+      font:600 0.96rem Rubik,Arial,sans-serif;
+      border:none;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      text-decoration:none;
+      transition:background .18s ease, transform .18s ease, box-shadow .18s ease, color .18s ease;
+    }
+
+    .btn-primary{
+      background:var(--accent);
+      color:#e5e7eb;
+      box-shadow:0 10px 24px rgba(37,99,235,0.45);
+    }
+
+    .btn-primary:hover{
+      background:var(--accent-dark);
+      transform:translateY(-1px);
+      box-shadow:0 16px 30px rgba(37,99,235,0.55);
+    }
+
+    .btn-secondary{
+      background:transparent;
+      color:#e5e7eb;
+      border:1px solid rgba(148,163,184,0.7);
+    }
+
+    .btn-secondary:hover{
+      background:rgba(15,23,42,0.9);
+    }
+
+    /* ===== GALLERY ===== */
+    .gallery-shell{
+      margin-top:30px;
+      background:rgba(15,23,42,0.95);
+      border-radius:30px;
+      padding:26px 18px 32px;
+      border:1px solid rgba(148,163,184,0.35);
+      box-shadow:0 24px 60px rgba(15,23,42,0.65);
+    }
+
+    .gallery-title{
+      text-align:center;
+      font:800 1.6rem Rubik,Arial,sans-serif;
+      color:#e5e7eb;
+      margin-bottom:6px;
+    }
+
+    .gallery-sub{
+      text-align:center;
+      font:400 0.98rem Karla,Arial,sans-serif;
+      color:#9ca3af;
+      margin-bottom:22px;
+    }
+
+    .grid{
+      display:grid;
+      gap:22px;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    }
+
+    .card{
+      background:var(--surface);
+      border-radius:var(--card-radius);
+      padding:14px 14px 16px;
+      border:1px solid var(--border);
+      box-shadow:0 14px 28px rgba(15,23,42,0.20);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 18px 36px rgba(15,23,42,0.32);
+      border-color:var(--accent-soft);
+    }
+
+    .thumb{
+      width:100%;
+      aspect-ratio:4/3;
+      border-radius:16px;
+      background:var(--surface-alt);
+      border:1px solid var(--border);
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+    }
+
+    .caption{
+      margin-top:10px;
+      text-align:center;
+      font:700 0.98rem Karla,Arial,sans-serif;
+      color:var(--ink);
+    }
+
+    /* ===== INFO / ABOUT ===== */
+    .info-grid{
+      margin:34px 0 10px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:22px;
+    }
+
+    .info-card{
+      background:linear-gradient(135deg,#020617,#020617 50%,#020617 80%,#111827);
+      border-radius:20px;
+      padding:20px 18px 18px;
+      border:1px solid rgba(148,163,184,0.45);
+      color:#e5e7eb;
+      box-shadow:0 20px 40px rgba(15,23,42,0.8);
+    }
+
+    .info-icon{
+      font-size:1.4rem;
+      margin-bottom:8px;
+      color:var(--accent-soft);
+    }
+
+    .info-title{
+      font:700 1rem Rubik,Arial,sans-serif;
+      margin-bottom:4px;
+    }
+
+    .info-text{
+      font:400 0.95rem/1.6 Karla,Arial,sans-serif;
+      color:#cbd5f5;
+    }
+
+    .info-text a{color:var(--accent-soft);text-decoration:underline;}
+
+    .stats-row{
+      margin-top:10px;
+      display:flex;
+      justify-content:center;
+      gap:40px;
+      flex-wrap:wrap;
+      font-family:Karla,Arial,sans-serif;
+      color:#e5e7eb;
+    }
+
+    .stat-main{
+      font-weight:800;
+      font-size:1.8rem;
+      text-align:center;
+    }
+
+    .stat-label{
+      font-size:0.9rem;
+      color:#9ca3af;
+      text-align:center;
+      margin-top:2px;
+    }
+
+    .howto-box{
+      margin:26px auto 0;
+      max-width:760px;
+      background:rgba(15,23,42,0.9);
+      border-radius:20px;
+      border:1px solid rgba(148,163,184,0.45);
+      padding:18px 16px 16px;
+      text-align:center;
+      font-family:Karla,Arial,sans-serif;
+      color:#e5e7eb;
+      font-size:0.96rem;
+    }
+
+    .howto-box h4{
+      margin-bottom:6px;
+      font:700 1.02rem Rubik,Arial,sans-serif;
+      color:#e5e7eb;
+    }
+
+    footer{
+      margin-top:32px;
+      padding:18px 0 10px;
+      text-align:center;
+      font:400 0.9rem Karla,Arial,sans-serif;
+      color:#9ca3af;
+      border-top:1px solid rgba(148,163,184,0.35);
+    }
+
+    footer a{color:#e5e7eb;text-decoration:underline;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="brand-wrap">
+        <img src="https://devfortress.com/wp-content/uploads/2025/10/Logo-square-1000px-transparent-background.png"
+             alt="Athena Board logo">
+        <div class="brand-text">
+          <h1>Athena Board – Universal App UI Kit</h1>
+          <p>Library of <strong>15</strong> reusable UI prefabs &ndash; headers, forms, nav bars, buttons and search patterns for <strong>any product</strong>.</p>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <!-- TODO: trocar o href pelo link real da sua library -->
+        <a href="https://excalidraw.com/?addLibrary=https%3A%2F%2Fraw.githubusercontent.com%2Fexcalidraw%2Fexcalidraw-libraries%2Fjessenahat-whiteboard-universal-app-ui-kit-1764254286214%2Flibraries%2Fjessenahat%2Fwhiteboard-universal-app-ui-kit.excalidrawlib%3Fraw%3Dtrue"
+           class="btn btn-primary" target="_blank" rel="noopener">
+          <i class="fa-solid fa-plus"></i>
+          Add to Whiteboard
+        </a>
+        <a href="https://github.com/Jessenahat"
+           class="btn btn-secondary" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github"></i>
+          View Source
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ===== PREVIEW GRID ===== -->
+    <section class="gallery-shell">
+      <h2 class="gallery-title">Library Preview</h2>
+      <p class="gallery-sub">Universal components you can drop into any flow &ndash; light and dark modes included.</p>
+
+      <div class="grid">
+        <!-- 1 CTAButtons -->
+        <article class="card">
+          <div class="thumb">
+            <img src="images/CTAButtons.png" alt="CTA Buttons (light mode)" loading="lazy">
+          </div>
+          <div class="caption">CTAButtons</div>
+        </article>
+
+        <!-- 2 CTAButtons_darkmode -->
+        <article class="card">
+          <div class="thumb">
+            <img src="images/CTAButtons_darkmode.png" alt="CTA Buttons dark mode" loading="lazy">
+          </div>
+          <div class="caption">CTAButtons_darkmode</div>
+        </article>
+
+        <!-- 3 Payment Form -->
+        <article class="card">
+          <div class="thumb">
+            <img src="images/PaymentForm.png" alt="Payment Form" loading="lazy">
+          </div>
+          <div class="caption">Payment Form</div>
+        </article>
+
+        <!-- 4 Payment Form_darkmode -->
+        <article class="card">
+          <div class="thumb">
+            <img src="images/PaymentForm_darkmode.png" alt="Payment Form dark mode" loading="lazy">
+          </div>
+          <div class="caption">Payment Form_darkmode</div>
+        </article>
+
+        <!-- 5 Card Placeholder -->
+        <article class="card">
+          <div class="thumb">
+            <img src="images/CardPlaceholder.png" alt="Card Placeholder (image + text)" loading="lazy">
+          </div>
+          <div class="caption">Card Placeholder (Image + Text)</div>
+        </article>
+
+        <!-- 6 Card Placeholder dark -->
+        <article class="card">
+          <div class="thumb">
+            <img src="images/CardPlaceholder_darkmode.png" alt="Card Placeholder dark" loading="lazy">
+          </div>
+          <div class="caption">Card Placeholder (Image + Text)_darkmode</div>
+        </article>
+
+        <!-- 7 Bottom Navigation -->
+        <article class="card">
+          <div class="thumb">
+            <img src="images/BottomNavigation.png" alt="Bottom navigation bar" loading="lazy">
+          </div>
+          <div class="caption">Bottom Navigation</div>
+        </article>
+
+        <!-- 8 DateSegmentControl -->
+        <article class="card">
+          <div class="thumb">
+            <img src="images/DateSegmentControl.png" alt="Date segment control" loading="lazy">
+          </div>
+          <div class="caption">DateSegmentControl</div>
+        </article>
+
+        <!-- 9 PaginationControl -->
+        <article class="card">
+          <div class="thumb">
+            <img src="images/PaginationControl.png" alt="Pagination control" loading="lazy">
+          </div>
+          <div class="caption">PaginationControl</div>
+        </article>
+
+        <!-- 10 Header_SearchBar -->
+        <article class="card">
+          <div class="thumb">
+            <img src="images/Header_SearchBar.png" alt="Header with search bar" loading="lazy">
+          </div>
+          <div class="caption">Header_SearchBar</div>
+        </article>
+
+        <!-- 11 Hearder_User -->
+        <article class="card">
+          <div class="thumb">
+            <img src="images/Header_User.png" alt="Header with user actions" loading="lazy">
+          </div>
+          <div class="caption">Hearder_User</div>
+        </article>
+
+        <!-- 12 Hearder_Model -->
+        <article class="card">
+          <div class="thumb">
+            <img src="images/Header_Model.png" alt="Header layout module" loading="lazy">
+          </div>
+          <div class="caption">Hearder_Model</div>
+        </article>
+
+        <!-- 13 Toggle Switches -->
+        <article class="card">
+          <div class="thumb">
+            <img src="images/ToggleSwitches.png" alt="Toggle switches light and dark" loading="lazy">
+          </div>
+          <div class="caption">Toggle Switches (Light &amp; Dark)</div>
+        </article>
+
+        <!-- 14 Search -->
+        <article class="card">
+          <div class="thumb">
+            <img src="images/Search.png" alt="Search component" loading="lazy">
+          </div>
+          <div class="caption">Search</div>
+        </article>
+
+        <!-- 15 search_darkMode -->
+        <article class="card">
+          <div class="thumb">
+            <img src="images/search_darkMode.png" alt="Search dark mode" loading="lazy">
+          </div>
+          <div class="caption">search_darkMode</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT / CREATOR ===== -->
+    <section class="info-grid">
+      <div class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-layer-group"></i></div>
+        <div class="info-title">Universal building blocks</div>
+        <div class="info-text">
+          CTA buttons, forms, navigation, headers and search patterns designed to drop into any whiteboard flow or mockup.
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-heart"></i></div>
+        <div class="info-title">Open source &amp; reusable</div>
+        <div class="info-text">
+          This kit is free to use and remix. Combine the prefabs to sketch new products faster without redrawing common UI patterns.
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-user"></i></div>
+        <div class="info-title">Creator</div>
+        <div class="info-text">
+          Designed for the Athena Board project by <strong>Jessica Nahat</strong>.<br/>
+          GitHub: <a href="https://github.com/Jessenahat" target="_blank" rel="noopener">github.com/Jessenahat</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-row">
+      <div>
+        <div class="stat-main">15</div>
+        <div class="stat-label">UI prefabs</div>
+      </div>
+      <div>
+        <div class="stat-main">2</div>
+        <div class="stat-label">color modes</div>
+      </div>
+      <div>
+        <div class="stat-main">∞</div>
+        <div class="stat-label">use cases</div>
+      </div>
+    </section>
+
+    <section class="howto-box">
+      <h4>How to use this library</h4>
+      <p>
+        Click the <strong>Add to Whiteboard</strong> button above to load the Universal App UI Kit into Athena Board / Excalidraw.
+        From there, drag any prefab into your canvas and adapt labels, colors or layout as needed.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    Athena Board – Universal App UI Kit &bull;
+    <span id="year"></span> &bull;
+    <a href="mailto:jessicanahat@gmail.com">Contact</a>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
